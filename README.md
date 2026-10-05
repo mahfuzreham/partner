@@ -2,22 +2,38 @@
 
 White-label multi-tenant reseller platform for ResellNom.
 
-## Current foundation
-- Laravel 12 / PHP 8.2+
-- Partner dashboard UI
-- Products and partner pricing UI
-- Support ticket UI
-- Withdrawal UI
-- Custom domain and branding UI
-- Multi-tenant/product/commission/withdrawal database foundation
-- WHMCS API service foundation
+## cPanel structure
 
-## cPanel deployment
+Keep the Laravel source outside the web root:
 
-1. Clone the private repository with your GitHub SSH deploy key.
-2. Copy `.env.example` to `.env` and configure MySQL/WHMCS credentials.
-3. Run Composer using the cPanel PHP 8.3 binary.
-4. Run `php artisan key:generate`, `php artisan migrate --force`, and `php artisan optimize`.
-5. Set the cPanel document root to `/home/USERNAME/partner.resellnom.com/public`.
+/home/USERNAME/
+├── partner/          # Laravel source + .env + vendor
+└── public_html/      # browser-accessible files only
 
-Never commit `.env` or WHMCS credentials.
+Clone the repository to /home/USERNAME/partner.
+
+## First deployment
+
+cd ~
+git clone git@github.com:mahfuzreham/partner.git partner
+cd ~/partner
+cp .env.example .env
+/opt/cpanel/ea-php83/root/usr/bin/php ~/composer.phar install --no-dev --optimize-autoloader
+/opt/cpanel/ea-php83/root/usr/bin/php artisan key:generate
+/opt/cpanel/ea-php83/root/usr/bin/php artisan migrate --force
+mkdir -p ~/public_html
+cp public/.htaccess ~/public_html/.htaccess
+cp public/index.php ~/public_html/index.php
+/opt/cpanel/ea-php83/root/usr/bin/php artisan optimize
+
+## Updates
+
+cd ~/partner
+git pull origin main
+/opt/cpanel/ea-php83/root/usr/bin/php ~/composer.phar install --no-dev --optimize-autoloader
+cp public/.htaccess ~/public_html/.htaccess
+cp public/index.php ~/public_html/index.php
+/opt/cpanel/ea-php83/root/usr/bin/php artisan migrate --force
+/opt/cpanel/ea-php83/root/usr/bin/php artisan optimize
+
+Never put .env, WHMCS credentials, app/, config/, database/, resources/, routes/, or vendor/ directly inside public_html.
