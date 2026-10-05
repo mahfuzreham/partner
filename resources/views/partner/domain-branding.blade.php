@@ -1,0 +1,5 @@
+@extends('layouts.partner')
+@section('content')
+<h1>Domain & Branding</h1><p class="muted">Connect your custom domain and configure your white-label store.</p>
+<div class="grid2"><div class="panel"><h3>Custom Domain</h3><p class="muted">Your store domain</p><input value="partners.abchosting.com" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px"><p><span class="badge paid">✓ DNS Verified</span> <span class="badge paid">✓ SSL Active</span></p><button class="btn">Change Domain</button></div><div class="panel"><h3>Branding</h3><p class="muted">Business name</p><input value="ABC Hosting" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px"><p class="muted">Store title</p><input value="ABC Hosting - Web Services" style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px"><br><br><button class="btn">Save Branding</button></div></div>
+@endsection
